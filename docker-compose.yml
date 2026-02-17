@@ -10,8 +10,15 @@ services:
     build: ./backend
     ports:
       - "5000:5000"
-    env_file:
-      - ./backend/.env
+    environment:
+      - DB_USER=crmuser
+      - DB_PASSWORD=crmpass
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=crm
+      - JWT_SECRET=crm_jwt_secret_prod_super_secure_2024_v1
+      - NODE_ENV=production
+      - AI_SERVICE_URL=http://ai-service:8000
     volumes:
       - ./backend:/app
       - /app/node_modules
