@@ -6,7 +6,6 @@ async function seedJury() {
     try {
         const hashedPassword = await bcrypt.hash("jury123!", 10);
 
-        // Check if user exists
         const check = await client.query("SELECT * FROM users WHERE login = 'jury'");
         if (check.rows.length > 0) {
             console.log("⚠️ L'utilisateur 'jury' existe déjà.");

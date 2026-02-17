@@ -14,6 +14,7 @@ import {
   Avatar,
   CircularProgress,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import {
   Visibility,
   VisibilityOff,
@@ -38,8 +39,6 @@ const pulse = keyframes`
   100% { transform: scale(1); }
 `;
 
-
-
 export default function Login() {
   const [credentials, setCredentials] = useState({ login: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -47,6 +46,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const theme = useTheme();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +70,7 @@ export default function Login() {
     <Box
       sx={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #1976d2 0%, #1565c0 100%)", // ✅ VOS COULEURS
+        background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -123,7 +123,7 @@ export default function Login() {
             sx={{
               p: 5,
               borderRadius: 4,
-              background: "rgba(255,255,255,0.95)",
+              background: theme.palette.mode === 'dark' ? "rgba(30, 41, 59, 0.9)" : "rgba(255,255,255,0.95)",
               backdropFilter: "blur(20px)",
               boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
               border: "1px solid rgba(255,255,255,0.2)",
@@ -141,7 +141,7 @@ export default function Login() {
                   width: 80,
                   height: 80,
                   margin: "0 auto 16px",
-                  background: "linear-gradient(135deg, #1976d2 0%, #1565c0 100%)", // ✅ VOS COULEURS
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
                   animation: `${pulse} 2s ease-in-out infinite`,
                 }}
               >
@@ -152,7 +152,7 @@ export default function Login() {
                 variant="h3"
                 sx={{
                   fontWeight: 700,
-                  background: "linear-gradient(135deg, #1976d2 0%, #1565c0 100%)", // ✅ VOS COULEURS
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
                   backgroundClip: "text",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -187,18 +187,18 @@ export default function Login() {
                     transition: "all 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-2px)",
-                      boxShadow: "0 8px 25px rgba(25,118,210,0.15)", // ✅ VOS COULEURS
+                      boxShadow: `0 8px 25px ${theme.palette.primary.main}20`,
                     },
                     "&.Mui-focused": {
                       transform: "translateY(-2px)",
-                      boxShadow: "0 8px 25px rgba(25,118,210,0.25)", // ✅ VOS COULEURS
+                      boxShadow: `0 8px 25px ${theme.palette.primary.main}40`,
                     },
                   },
                 }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Person sx={{ color: "#1976d2" }} /> {/* ✅ VOS COULEURS */}
+                      <Person color="primary" />
                     </InputAdornment>
                   ),
                 }}
@@ -220,18 +220,18 @@ export default function Login() {
                     transition: "all 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-2px)",
-                      boxShadow: "0 8px 25px rgba(25,118,210,0.15)", // ✅ VOS COULEURS
+                      boxShadow: `0 8px 25px ${theme.palette.primary.main}20`,
                     },
                     "&.Mui-focused": {
                       transform: "translateY(-2px)",
-                      boxShadow: "0 8px 25px rgba(25,118,210,0.25)", // ✅ VOS COULEURS
+                      boxShadow: `0 8px 25px ${theme.palette.primary.main}40`,
                     },
                   },
                 }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Lock sx={{ color: "#1976d2" }} /> {/* ✅ VOS COULEURS */}
+                      <Lock color="primary" />
                     </InputAdornment>
                   ),
                   endAdornment: (
@@ -239,7 +239,7 @@ export default function Login() {
                       <IconButton
                         onClick={() => setShowPassword(!showPassword)}
                         edge="end"
-                        sx={{ color: "#1976d2" }} // ✅ VOS COULEURS
+                        color="primary"
                       >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
@@ -275,13 +275,13 @@ export default function Login() {
                   borderRadius: 2,
                   fontSize: "1.1rem",
                   fontWeight: 600,
-                  background: "linear-gradient(135deg, #1976d2 0%, #1565c0 100%)", // ✅ VOS COULEURS
-                  boxShadow: "0 8px 25px rgba(25,118,210,0.3)", // ✅ VOS COULEURS
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+                  boxShadow: `0 8px 25px ${theme.palette.primary.main}50`,
                   transition: "all 0.3s ease",
                   "&:hover": {
                     transform: "translateY(-3px)",
-                    boxShadow: "0 15px 35px rgba(25,118,210,0.4)", // ✅ VOS COULEURS
-                    background: "linear-gradient(135deg, #1565c0 0%, #1976d2 100%)", // ✅ VOS COULEURS
+                    boxShadow: `0 15px 35px ${theme.palette.primary.main}60`,
+                    background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
                   },
                   "&:disabled": {
                     background: "linear-gradient(135deg, #ccc 0%, #999 100%)",
@@ -296,11 +296,21 @@ export default function Login() {
               </Button>
             </Box>
 
-            {/* Footer */}
-            <Box sx={{ textAlign: "center", mt: 4 }}>
-              <Typography variant="body2" color="textSecondary">
+            <Box sx={{ mt: 4, textAlign: "center" }}>
+              <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
                 © 2025 ClientFlow - Solution de gestion client
               </Typography>
+              <Box sx={{ display: "flex", justifyContent: "center", gap: 2, opacity: 0.7 }}>
+                <Typography variant="caption" sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
+                  Mentions Légales
+                </Typography>
+                <Typography variant="caption" sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
+                  Politique de Confidentialité
+                </Typography>
+                <Typography variant="caption" sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
+                  Gestion des cookies
+                </Typography>
+              </Box>
             </Box>
           </Paper>
         </Fade>

@@ -14,6 +14,7 @@ import {
   CircularProgress,
   Divider
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import SendIcon from '@mui/icons-material/Send';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import PersonIcon from '@mui/icons-material/Person';
@@ -25,6 +26,7 @@ const AIAssistant = () => {
   ]);
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const theme = useTheme();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -80,7 +82,7 @@ const AIAssistant = () => {
         </Box>
 
         {/* Chat Area */}
-        <Box sx={{ flex: 1, overflowY: 'auto', p: 2, bgcolor: '#f5f5f5' }}>
+        <Box sx={{ flex: 1, overflowY: 'auto', p: 2, bgcolor: 'background.default' }}>
           <List>
             {chat.map((msg, index) => (
               <ListItem key={index} sx={{ justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
@@ -98,8 +100,13 @@ const AIAssistant = () => {
                     p: 2,
                     maxWidth: '70%',
                     borderRadius: 2,
-                    bgcolor: msg.role === 'user' ? 'primary.light' : 'white',
-                    color: msg.role === 'user' ? 'white' : 'text.primary'
+                    bgcolor: msg.role === 'user'
+                      ? 'primary.main'
+                      : (theme.palette.mode === 'dark' ? 'background.paper' : 'white'),
+                    color: msg.role === 'user'
+                      ? 'white'
+                      : (theme.palette.mode === 'dark' ? 'text.primary' : 'text.primary'),
+                    border: theme.palette.mode === 'dark' && msg.role === 'ai' ? '1px solid rgba(255,255,255,0.1)' : 'none'
                   }}
                 >
                   <Typography variant="body1" style={{ whiteSpace: 'pre-wrap' }}>{msg.text}</Typography>
@@ -133,7 +140,7 @@ const AIAssistant = () => {
         <Divider />
 
         {/* Input Area */}
-        <Box sx={{ p: 2, bgcolor: 'white', display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ p: 2, bgcolor: 'background.paper', display: 'flex', alignItems: 'center' }}>
           <TextField
             fullWidth
             variant="outlined"

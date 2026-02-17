@@ -18,9 +18,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ClientForm from "../components/ClientForm";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "@mui/material/styles";
 
 export default function Clients() {
   const { user } = useAuth();
+  const theme = useTheme();
   const [clients, setClients] = useState([]);
   const [search, setSearch] = useState("");
   const [snackbar, setSnackbar] = useState({ open: false, message: "" });
@@ -126,7 +128,7 @@ export default function Clients() {
   return (
     <Paper
       elevation={3}
-      sx={{ p: 3, borderRadius: 3, bgcolor: "#fff" }}
+      sx={{ p: 3, borderRadius: 3, bgcolor: "background.paper" }}
     >
       <Box
         sx={{
@@ -168,7 +170,7 @@ export default function Clients() {
           size="small"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          sx={{ width: 300, bgcolor: "white" }}
+          sx={{ width: 300, bgcolor: theme.palette.mode === 'dark' ? 'background.default' : 'white' }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -186,13 +188,26 @@ export default function Clients() {
         pageSize={5}
         rowsPerPageOptions={[5]}
         sx={{
-          bgcolor: "#f4f6fa",
-          borderRadius: 2,
-          "& .MuiDataGrid-columnHeaders": {
-            bgcolor: "#f5f5f5",
-            color: "#000",
-            fontWeight: "bold",
+          border: 'none',
+          '& .MuiDataGrid-cell': {
+            borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#f0f0f0',
+            color: 'text.primary',
           },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: theme.palette.mode === 'dark' ? '#18181b' : '#f8fafc',
+            borderBottom: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#e2e8f0'}`,
+            color: 'text.secondary',
+            fontWeight: 'bold',
+          },
+          '& .MuiDataGrid-row:hover': {
+            backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.02)',
+          },
+          '& .MuiTablePagination-root': {
+            color: 'text.secondary',
+          },
+          '& .MuiDataGrid-footerContainer': {
+            borderTop: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#e2e8f0'}`,
+          }
         }}
       />
 

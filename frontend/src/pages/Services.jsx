@@ -27,6 +27,7 @@ import {
   TrendingUp as TrendingUpIcon,
 } from "@mui/icons-material";
 import api from "../api";
+import { useTheme } from "@mui/material/styles";
 import ServiceForm from "../components/ServiceForm";
 import ServiceAssignDialog from "../components/ServiceAssignDialog";
 
@@ -47,6 +48,7 @@ const SERVICE_TYPE_COLORS = {
 };
 
 export default function Services() {
+  const theme = useTheme();
   const [services, setServices] = useState([]);
   const [filteredServices, setFilteredServices] = useState([]);
   const [search, setSearch] = useState("");
@@ -80,13 +82,13 @@ export default function Services() {
       setLoading(true);
       const response = await api.get("/services");
       setServices(response.data);
-      
+
       // Calculer les stats
       const totalServices = response.data.length;
       const activeServices = response.data.filter(s => s.is_active).length;
       const totalRevenue = response.data.reduce((sum, s) => sum + (parseFloat(s.revenue_total) || 0), 0);
       const totalClients = response.data.reduce((sum, s) => sum + (parseInt(s.clients_count) || 0), 0);
-      
+
       setStats({ totalServices, activeServices, totalRevenue, totalClients });
     } catch (error) {
       console.error("Erreur lors de la récupération des services:", error);
@@ -128,11 +130,11 @@ export default function Services() {
   return (
     <Box>
       {/* En-tête avec statistiques */}
-      <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 3, bgcolor: "#fff" }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 3, bgcolor: 'background.paper' }}>
         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#1976d2", mb: 3 }}>
           Gestion des Services
         </Typography>
-        
+
         <Grid container spacing={2} sx={{ mb: 3 }}>
           <Grid item xs={12} sm={6} md={3}>
             <Card sx={{ bgcolor: '#e3f2fd' }}>
@@ -183,7 +185,7 @@ export default function Services() {
             }}
             sx={{ minWidth: 300 }}
           />
-          
+
           <Box sx={{ display: 'flex', gap: 1 }}>
             <Button
               variant="outlined"
@@ -209,7 +211,7 @@ export default function Services() {
         <TableContainer>
           <Table>
             <TableHead>
-              <TableRow sx={{ bgcolor: '#f5f5f5' }}>
+              <TableRow sx={{ bgcolor: theme.palette.mode === 'dark' ? '#18181b' : '#f5f5f5' }}>
                 <TableCell><strong>Service</strong></TableCell>
                 <TableCell><strong>Type</strong></TableCell>
                 <TableCell><strong>Prix</strong></TableCell>
@@ -277,9 +279,9 @@ export default function Services() {
                         <IconButton size="small" onClick={() => handleEdit(service)} title="Modifier">
                           <EditIcon fontSize="small" />
                         </IconButton>
-                        <IconButton 
-                          size="small" 
-                          onClick={() => handleDelete(service)} 
+                        <IconButton
+                          size="small"
+                          onClick={() => handleDelete(service)}
                           title="Désactiver"
                           disabled={!service.is_active}
                         >

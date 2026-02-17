@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import theme from "./theme";
+import { CssBaseline } from "@mui/material";
 import Login from "./pages/Login";
 import Clients from "./pages/Clients";
 import Dashboard from "./pages/Dashboard";
@@ -14,6 +13,8 @@ import AIAssistant from './components/AIAssistant';
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
+import { ColorModeProvider } from "./context/ColorModeContext";
+
 function PrivateRoute({ children }) {
   const { token } = useAuth();
   return token ? children : <Navigate to="/" replace />;
@@ -21,7 +22,7 @@ function PrivateRoute({ children }) {
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ColorModeProvider>
       <CssBaseline />
       <AuthProvider>
         <BrowserRouter>
@@ -46,6 +47,6 @@ export default function App() {
           </Routes>
         </BrowserRouter>
       </AuthProvider>
-    </ThemeProvider>
+    </ColorModeProvider>
   );
 }

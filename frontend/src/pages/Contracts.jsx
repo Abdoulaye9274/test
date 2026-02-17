@@ -11,9 +11,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import jsPDF from "jspdf";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "@mui/material/styles";
 
 export default function Contracts() {
   const { user } = useAuth();
+  const theme = useTheme();
   const [contracts, setContracts] = useState([]);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -144,7 +146,10 @@ export default function Contracts() {
                 </InputAdornment>
               ),
             }}
-            sx={{ bgcolor: "#f9f9f9", borderRadius: 1 }}
+            sx={{
+              bgcolor: theme.palette.mode === 'dark' ? 'background.paper' : '#f9f9f9',
+              borderRadius: 1
+            }}
           />
         </Box>
 
@@ -158,13 +163,17 @@ export default function Contracts() {
           sx={{
             border: "none",
             "& .MuiDataGrid-columnHeaders": {
-              bgcolor: "#f5f5f5",
-              color: "#000",
+              bgcolor: theme.palette.mode === 'dark' ? '#18181b' : '#f5f5f5',
+              color: theme.palette.text.primary,
               fontSize: "1rem",
               fontWeight: "bold",
             },
             "& .MuiDataGrid-row:hover": {
-              bgcolor: "#f5f5f5",
+              bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#f5f5f5',
+            },
+            "& .MuiDataGrid-cell": {
+              borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#f0f0f0',
+              color: 'text.primary',
             },
           }}
         />
