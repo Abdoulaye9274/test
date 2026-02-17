@@ -45,8 +45,11 @@ const AIAssistant = () => {
     setLoading(true);
 
     try {
-      // Note: Ensure your AI service is running on port 8000
-      const res = await axios.post('http://localhost:8000/chat', { message: userMessage.text });
+      // Utilise l'API backend qui proxie vers le service IA
+      // En dev: http://localhost:5000/api/ai/chat
+      // En prod (Docker): /api/ai/chat via nginx proxy
+      const apiUrl = process.env.REACT_APP_API_URL || "/api";
+      const res = await axios.post(`${apiUrl}/ai/chat`, { message: userMessage.text });
       setChat((prev) => [...prev, { role: 'ai', text: res.data.response }]);
     } catch (err) {
       console.error(err);

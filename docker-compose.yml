@@ -36,6 +36,18 @@ services:
       timeout: 5s
       retries: 5
 
+  # ✅ SERVICE IA (optionnel, mais recommandé pour production)
+  ai-service:
+    build: ./ai-service
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - BACKEND_URL=http://backend:5000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
 volumes:
   db_data:
 

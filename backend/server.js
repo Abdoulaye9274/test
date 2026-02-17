@@ -7,6 +7,7 @@ import activitiesRoutes from "./routes/activities.js";
 import clientRoutes from "./routes/clients.js";
 import dossierRoutes from "./routes/dossiers.js";
 import userRoutes from "./routes/users.js";
+import aiRoutes from "./routes/ai.js";
 import dotenv from "dotenv";
 import pool from "./db.js";
 
@@ -67,6 +68,9 @@ app.get("/api/stats/dashboard", async (req, res) => {
 
 // ✅ ROUTES AUTH
 app.use("/api/auth", authRoutes);
+
+// ✅ ROUTES IA
+app.use("/api/ai", aiRoutes);
 
 // ✅ ROUTES PROTÉGÉES
 app.use("/api/contracts", contractRoutes);

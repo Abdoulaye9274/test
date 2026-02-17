@@ -4,21 +4,26 @@ from pydantic import BaseModel
 from chatbot import FreeChatbot
 from predictor import SimplePredictor
 import requests
+import os
 
 app = FastAPI()
 
+# ✅ CONFIG DYNAMIQUE POUR PRODUCTION
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:5000")
+FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:3001")
+
+print(f"🔗 BACKEND_URL: {BACKEND_URL}")
+print(f"🌐 FRONTEND_ORIGIN: {FRONTEND_ORIGIN}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001", "http://localhost:3000"],
+    allow_origins=[FRONTEND_ORIGIN, "http://localhost:3001", "http://localhost:3000"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 chatbot = FreeChatbot()
 predictor = SimplePredictor()
-
-# ✅ URL DU BACKEND (modifiez selon votre config)
-BACKEND_URL = "http://localhost:5000"
 
 class ChatRequest(BaseModel):
     message: str
